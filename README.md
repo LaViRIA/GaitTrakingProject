@@ -31,3 +31,6 @@ Un script destinado a procesar imagenes de una grabacion, acompañado de un arch
 
 ### Posprocess Manager
 Un script que gestiona el posprocesado de diversas capturas en paralelo, permite agilizar el posprocesado. [Mas informacion](./Docs/es/posprocess%20manager.md)
+
+### Process All
+Ees un script de análisis y validación que procesa masivamente conjuntos de datos (MCD y ArUco). Se encarga de reconstruir la cinemática del tren inferior a partir de los datos de los sensores inerciales y compara los resultados con la referencia óptica (ArUco) para calcular errores de posición, generar gráficas de rendimiento y evaluar la precisión del sistema.
