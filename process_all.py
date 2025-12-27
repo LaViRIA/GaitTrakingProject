@@ -234,11 +234,7 @@ def read_mcd_file(path: str) -> dict[str, np.ndarray]:
                 )
                 for n in range(3)
             ]
-            # (mcd_data[f"gyro_{i}"] / 16.4)
-            # * (np.pi / 180)
         ).T
-        # mcd_data[f"gyro_{i}"] = (mcd_data[f"gyro_{i}"] / 16.4) * (np.pi / 180)
-        # mcd_data[f"acceleration_{i}"] = (mcd_data[f"acceleration_{i}"] / 16_384) * 9.81
         mcd_data[f"acceleration_{i}"] = np.array(
             [
                 low_pass_filter(
@@ -246,19 +242,7 @@ def read_mcd_file(path: str) -> dict[str, np.ndarray]:
                 )
                 for n in range(3)
             ]
-            # (mcd_data[f"acceleration_{i}"] / 16_384)
-            # * 9.81
         ).T
-        # mcd_data[f'gyro_{i}'] = np.array([
-        #     bandpass_filter(
-        #         ((mcd_data[f'gyro_{i}']/16.4)*(np.pi/180)).T[n], 0.01, 7, fs, order=4)
-        #     for n in range(3)]).T
-        # mcd_data[f'acceleration_{i}'] = np.array([
-        #     bandpass_filter(
-        #         ((mcd_data[f'acceleration_{i}']/16_384)*9.81).T[n], 0.01, 7, fs, order=4)
-        #     for n in range(3)]).T
-    # print(f'Frecuencia de muestreo: {fs} Hz')
-    # analizar_y_graficar_fft(mcd_data['gyro_RF'], fs)
 
     return mcd_data
 
@@ -705,18 +689,6 @@ def mcd_reconstruction(mcd_data: dict[str, np.ndarray]) -> dict[str, np.ndarray]
     }
     quats = get_orientation(mcd_data)
 
-    # fix_rot_r = R.from_euler('Z', -np.mean(rot_r[:, 0])*.5, degrees=True).as_quat(scalar_first=True)
-    # fix_rot_l = R.from_euler('Z', -np.mean(rot_l[:, 0])*.5, degrees=True).as_quat(scalar_first=True)
-    # fix_rot_rk = R.from_euler('Z', -np.mean(rot_rk[:, 0])*.5, degrees=True).as_quat(scalar_first=True)
-    # fix_rot_lk = R.from_euler('Z', -np.mean(rot_lk[:, 0])*.5, degrees=True).as_quat(scalar_first=True)
-    # for i in range(len(quats['rf'])):
-    #     quats['rf'][i] = multiplicacion(fix_rot_r, quats['rf'][i])
-    #     quats['rt'][i] = multiplicacion(fix_rot_r, quats['rt'][i])
-    #     quats['rt'][i] = multiplicacion(fix_rot_rk, quats['rt'][i])
-    #     quats['lf'][i] = multiplicacion(fix_rot_l, quats['lf'][i])
-    #     quats['lt'][i] = multiplicacion(fix_rot_l, quats['lt'][i])
-    #     quats['lt'][i] = multiplicacion(fix_rot_lk, quats['lt'][i])
-
     pose = get_all_poses(quats, points)
     # plt.show()
     reconstruction = {
@@ -1124,8 +1096,8 @@ def process_files(files: tuple[str, str]) -> any:
 
     subject = files[0].split(split_char)[-2]
     capture = files[0].split(split_char)[-1].split(".")[0][-1]
-   
-    '''
+
+    """
     # Grafica 3D de la trajectoria de las acticulaciones
     fig = plt.figure(figsize=figsize)
     ax = fig.add_subplot(projection="3d")
@@ -1203,7 +1175,7 @@ def process_files(files: tuple[str, str]) -> any:
         dpi=300,
         bbox_inches="tight",
     )
-    '''
+    """
 
     # plt.plot(sorted(common_time), gen_eucliden_error,
     #          label='General Euclidean Error')
