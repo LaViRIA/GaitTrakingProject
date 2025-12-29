@@ -49,6 +49,6 @@ Es un script de análisis y validación que procesa masivamente conjuntos de dat
 
 #### Creditos
 
-Autor: Moises Badajoz Martinez <<m.badajozmartinez@ugto.mx>>
+Autor: Moises Badajoz Martinez <<m.badajozmartinez@ugto.mx>> <br>
 Laboratorio de Visión Robótica e Inteligencia artificial
 Universidad de Guanajuato
