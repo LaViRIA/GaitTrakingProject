@@ -1,3 +1,9 @@
+"""
+Author: Moises Badajoz Martinez <m.badajozmartinez@ugto.mx>
+
+University of Guanajuato (2025)
+"""
+
 from tkinter import filedialog
 import glob
 import subprocess

@@ -1,3 +1,9 @@
+"""
+Author: Moises Badajoz Martinez <m.badajozmartinez@ugto.mx>
+
+University of Guanajuato (2025)
+"""
+
 import serial
 from dataclasses import dataclass
 import struct
@@ -17,12 +23,13 @@ def unpacket_data_to_dict(data: tuple) -> dict:
         "timestamp": data[2],
         "sensor_count": data[1],
         "data": {
-            ''.join([format(x, '02X') for x in data[3+(i*16):9+(i*16)]]): {
-                "quat": list(data[9+(i*16):13+(i*16)]),
-                "accel": list(data[13+(i*16):16+(i*16)]),
-                "gyro": list(data[16+(i*16):19+(i*16)])
-            } for i in range(data[1])
-        }
+            "".join([format(x, "02X") for x in data[3 + (i * 16) : 9 + (i * 16)]]): {
+                "quat": list(data[9 + (i * 16) : 13 + (i * 16)]),
+                "accel": list(data[13 + (i * 16) : 16 + (i * 16)]),
+                "gyro": list(data[16 + (i * 16) : 19 + (i * 16)]),
+            }
+            for i in range(data[1])
+        },
     }
     return dict_data
 
@@ -39,8 +46,12 @@ def unpacket_bat_to_dict(data: tuple) -> dict:
     dict_bat = {
         "type": data[0],
         "sensor_count": data[1],
-        "data": {''.join([format(x, '02X') for x in data[2+(i*7):8+(i*7)]]): data[8+(i*7)]
-                 for i in range(data[1])}
+        "data": {
+            "".join([format(x, "02X") for x in data[2 + (i * 7) : 8 + (i * 7)]]): data[
+                8 + (i * 7)
+            ]
+            for i in range(data[1])
+        },
     }
     return dict_bat
 
@@ -99,8 +110,8 @@ def unpack_bat(buffer: bytearray, FORMAT: str) -> dict:
 
 @dataclass
 class McdAPI:
-    """Clase para la comunicacion con el dispositivo
-    """
+    """Clase para la comunicacion con el dispositivo"""
+
     __port: str  # puerto serial
     __baudrate: int  # baudrate del puerto
 
@@ -169,7 +180,7 @@ class McdAPI:
         except:
             return False
 
-    def read(self) -> (bytes | None):
+    def read(self) -> bytes | None:
         """Retorna la lectura del puerto serial
 
         Returns:
@@ -186,57 +197,56 @@ class McdAPI:
         return self.__ser.in_waiting
 
     def sync_mode(self) -> None:
-        """Envia el mensaje para entrar en modo sincronizacion
-        """
-        buffer = b'\x03'
+        """Envia el mensaje para entrar en modo sincronizacion"""
+        buffer = b"\x03"
         self.__ser.write(buffer)
 
-    def identify_sensor(self, addr: str = 'FFFFFFFFFFFF') -> None:
+    def identify_sensor(self, addr: str = "FFFFFFFFFFFF") -> None:
         """Envia el mensaje para identificar en uno o todos los sensores
 
         Args:
             addr (str, optional): Direccion objetivo. Defaults to 'FFFFFFFFFFFF'.
         """
         mac = bytes.fromhex(addr)
-        buffer = b'\x07'+mac
+        buffer = b"\x07" + mac
         self.__ser.write(buffer)
 
-    def read_start(self, addr: str = 'FFFFFFFFFFFF') -> None:
+    def read_start(self, addr: str = "FFFFFFFFFFFF") -> None:
         """Envia el mensaje para iniciar la lectura en uno o todos los sensores
 
         Args:
             addr (str, optional): Direccion objetivo. Defaults to 'FFFFFFFFFFFF'.
         """
         mac = bytes.fromhex(addr)
-        buffer = b'\x08'+mac
+        buffer = b"\x08" + mac
         self.__ser.write(buffer)
 
-    def read_stop(self, addr: str = 'FFFFFFFFFFFF') -> None:
+    def read_stop(self, addr: str = "FFFFFFFFFFFF") -> None:
         """Envia el mensaje para detener la lectura en uno o todos los sensores
 
         Args:
             addr (str, optional): Direccion objetivo. Defaults to 'FFFFFFFFFFFF'.
         """
         mac = bytes.fromhex(addr)
-        buffer = b'\x09'+mac
+        buffer = b"\x09" + mac
         self.__ser.write(buffer)
 
-    def reset_sensor(self, addr: str = 'FFFFFFFFFFFF') -> None:
+    def reset_sensor(self, addr: str = "FFFFFFFFFFFF") -> None:
         """Envia el mensaje para resetear uno o todos los sensores
 
         Args:
             addr (str, optional): Direccion objetivo. Defaults to 'FFFFFFFFFFFF'.
         """
         mac = bytes.fromhex(addr)
-        buffer = b'\x0A'+mac
+        buffer = b"\x0a" + mac
         self.__ser.write(buffer)
 
-    def calibrate_sensor(self, addr: str = 'FFFFFFFFFFFF') -> None:
+    def calibrate_sensor(self, addr: str = "FFFFFFFFFFFF") -> None:
         """Envia el mensaje para calibrar uno o todos los sensores
 
         Args:
             addr (str, optional): Direccion objetivo. Defaults to 'FFFFFFFFFFFF'.
         """
         mac = bytes.fromhex(addr)
-        buffer = b'\x0B'+mac
+        buffer = b"\x0b" + mac
         self.__ser.write(buffer)

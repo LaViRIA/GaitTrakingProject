@@ -1,3 +1,8 @@
+/*
+Author: Moises Badajoz Martinez <m.badajozmartinez@ugto.mx>
+
+University of Guanajuato (2025)
+*/
 #include "ESP32_NOW.h"
 #include <WiFi.h>
 #include "MPU6050_6Axis_MotionApps612.h"

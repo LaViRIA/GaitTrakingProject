@@ -1,3 +1,9 @@
+"""
+Author: Moises Badajoz Martinez <m.badajozmartinez@ugto.mx>
+
+University of Guanajuato (2025)
+"""
+
 import cv2
 import numpy as np
 from numpy.linalg import inv

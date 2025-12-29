@@ -1,3 +1,8 @@
+/*
+Author: Moises Badajoz Martinez <m.badajozmartinez@ugto.mx>
+
+University of Guanajuato (2025)
+*/
 #include <esp_now.h>
 #include <WiFi.h>
 #include "esp_wifi.h"

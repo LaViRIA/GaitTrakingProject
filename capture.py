@@ -1,3 +1,9 @@
+"""
+Author: Moises Badajoz Martinez <m.badajozmartinez@ugto.mx>
+
+University of Guanajuato (2025)
+"""
+
 import customtkinter as ctk
 from tkinter import filedialog, font
 import matplotlib.pyplot as plt
